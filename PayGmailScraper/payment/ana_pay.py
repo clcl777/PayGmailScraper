@@ -2,15 +2,15 @@ import base64
 
 from dateutil import parser
 
-from PayGmailScraper.pay_gmail_scraper_base import PayGmailScraperBase
+from PayGmailScraper.parse_gmail_base import ParseGmailBase
 from PayGmailScraper.payment_information import PaymentInformation
 
 
-class AnaPayGmailScraper(PayGmailScraperBase):
-    def __init__(self):
+class AnaPayParseGmail(ParseGmailBase):
+    def __init__(self, service):
         email_address = "payinfo@121.ana.co.jp"
         email_title = "ご利用のお知らせ"
-        super().__init__(email_address, email_title)
+        super().__init__(email_address, email_title, service)
         self.payment_name = "ANA Pay"
 
     def _parse_email(self, response: dict) -> PaymentInformation:
@@ -32,8 +32,3 @@ class AnaPayGmailScraper(PayGmailScraperBase):
                 elif key == "ご利用店舗":
                     payment_info.store = value
         return payment_info
-
-
-def get_payments_ana_pay() -> list[PaymentInformation]:
-    ana_pay_gmail_scraper = AnaPayGmailScraper()
-    return ana_pay_gmail_scraper.get_all_payment_info()

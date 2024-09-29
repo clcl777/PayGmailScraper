@@ -1,13 +1,12 @@
 from abc import ABC, abstractmethod
 
-from PayGmailScraper.gmail_setup import gmail_setup
-from PayGmailScraper.payment_information import PaymentInformation
+from .payment_information import PaymentInformation
 
 
-class PayGmailScraperBase(ABC):
-    def __init__(self, email_address: str, email_title: str):
-        self.service = gmail_setup()
+class ParseGmailBase(ABC):
+    def __init__(self, email_address: str, email_title: str, service):
         self.query = f"from:{email_address} subject:{email_title}"
+        self.service = service
 
     @abstractmethod
     def _parse_email(self, response: dict) -> PaymentInformation:

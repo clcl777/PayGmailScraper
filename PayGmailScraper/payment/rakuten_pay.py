@@ -3,15 +3,15 @@ import re
 
 from dateutil import parser
 
-from PayGmailScraper.pay_gmail_scraper_base import PayGmailScraperBase
+from PayGmailScraper.parse_gmail_base import ParseGmailBase
 from PayGmailScraper.payment_information import PaymentInformation
 
 
-class RakutenPayGmailScraper(PayGmailScraperBase):
-    def __init__(self):
+class RakutenPayParseGmail(ParseGmailBase):
+    def __init__(self, service):
         email_address = "no-reply@pay.rakuten.co.jp"
         email_title = "楽天ペイアプリご利用内容確認メール"
-        super().__init__(email_address, email_title)
+        super().__init__(email_address, email_title, service)
         self.payment_name = "楽天ペイ"
 
     def _parse_email(self, response: dict) -> PaymentInformation:
@@ -33,8 +33,3 @@ class RakutenPayGmailScraper(PayGmailScraperBase):
             elif line.startswith("　　決済総額　　　"):
                 payment_info.price = int(line.replace("　　決済総額　　　", "").replace("円", "").replace(",", ""))
         return payment_info
-
-
-def get_payments_rakuten_pay() -> list[PaymentInformation]:
-    rakuten_pay_gmail_scraper = RakutenPayGmailScraper()
-    return rakuten_pay_gmail_scraper.get_all_payment_info()
