@@ -34,6 +34,6 @@ class AnaPayGmailScraper(PayGmailScraperBase):
         return payment_info
 
 
-def ana_pay() -> list[PaymentInformation]:
+def get_payments_ana_pay() -> list[PaymentInformation]:
     ana_pay_gmail_scraper = AnaPayGmailScraper()
     return ana_pay_gmail_scraper.get_all_payment_info()
