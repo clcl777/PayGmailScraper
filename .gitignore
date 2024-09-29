@@ -6,3 +6,4 @@ dist/
 .pypirc
 credentials.json
 token.json
+venv/
