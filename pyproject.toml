@@ -1,0 +1,40 @@
+[project]
+name = "PyGmailScraper"
+version = "1.0.0"
+description = "Retrieve payment information, including QR code payments and credit card, from Gmail."
+readme = "README.md"
+license = {file = "LICENSE.txt"}
+maintainers = [{name = "tra", email = "tisk0711ngm@gmail.com"}]
+authors = [{name = "tra", email = "tisk0711ngm@gmail.com"}]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Environment :: Web Environment",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Typing :: Typed",
+    "Topic :: Software Development",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "google-api-python-client==2.111.0",
+    "google-auth==2.29.0",
+    "google-auth-oauthlib==1.2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "build",
+    "twine",
+    "types-python-dateutil",
+]
+
+[tool.black]
+line-length = 120
+
+[tool.flake8]
+max-line-length = 120
+
+[project.urls]
+Source = "https://github.com/clcl777/PayGmailScraper"
