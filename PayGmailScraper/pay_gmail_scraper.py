@@ -7,7 +7,7 @@ from .payment_information import PaymentInformation
 
 
 class PayGmailScraper:
-    def __init__(self, credentials_path: str, token_path: str | None = None):
+    def __init__(self, credentials_path: str, token_path: str | None = None) -> None:
         if not token_path:
             token_path = os.path.join(os.path.dirname(credentials_path), "token.json")
         self.service = gmail_setup(credentials_path, token_path)
