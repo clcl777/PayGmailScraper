@@ -89,6 +89,7 @@ def authorize(credentials_path: str | None = None, https: bool = True):
         redirect_uri = url_for("oauth2callback_route", _external=True, _scheme="https")
     else:
         redirect_uri = url_for("oauth2callback_route", _external=True)
+    print(f"redirect_uri: {redirect_uri}")
     flow = Flow.from_client_config(
         client_secrets_data,
         scopes=SCOPES,
@@ -129,6 +130,7 @@ def oauth2callback():
     """OAuth 2.0のコールバックを処理し、資格情報をセッションに保存します。"""
     global flow
     global credentials
+    print(f"request.url: {request.url}")
     flow.fetch_token(authorization_response=request.url)
     credentials = flow.credentials
     session["credentials"] = credentials_to_dict(credentials)
