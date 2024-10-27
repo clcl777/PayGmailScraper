@@ -6,7 +6,7 @@ from .payment_information import PaymentInformation
 
 class PayGmailScraper:
 
-    def __init__(self, auth_type="desktop", credentials_path=None, token_path="token.json"):
+    def __init__(self, auth_type: str = "desktop", credentials_path: str | None = None, token_path: str = "token.json"):
         """
         PayGmailScraperを初期化します。
 

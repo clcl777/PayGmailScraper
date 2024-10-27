@@ -10,6 +10,9 @@ app.secret_key = "your-secret-key"
 # 開発環境で HTTPS を使用しない場合の設定
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
+# credentials_web.jsonのパスを指定　指定しない場合は環境変数から取得
+CREDENTIALS_PATH = "credentials_web.json"
+
 
 @app.route("/")
 def index():
@@ -28,7 +31,7 @@ def index():
 
 @app.route("/authorize")
 def authorize_route():
-    return authorize()
+    return authorize(CREDENTIALS_PATH)
 
 
 @app.route("/oauth2callback")

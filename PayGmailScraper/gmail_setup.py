@@ -19,7 +19,7 @@ def gmail_setup(credentials_path: str | None, auth_type: str, token_path: str):
             raise ValueError("デスクトップアプリの場合、credentials.jsonのパスを指定してください。")
         return gmail_setup_desktop(credentials_path, token_path)
     elif auth_type == "web":
-        return gmail_setup_web()
+        return gmail_setup_web(credentials_path)
     else:
         raise ValueError("auth_typeは 'desktop' または 'web' を指定してください。")
 
@@ -50,7 +50,7 @@ def gmail_setup_desktop(client_secrets_path: str, token_path: str):
         raise
 
 
-def gmail_setup_web():
+def gmail_setup_web(credentials_path: str):
     """Webアプリ用のGmail APIセットアップ。"""
     global flow
     global credentials
@@ -80,11 +80,11 @@ def gmail_setup_web():
         raise
 
 
-def authorize():
+def authorize(credentials_path: str | None = None):
     """ユーザーをGoogleのOAuth 2.0認証ページにリダイレクトします。"""
     global flow
     # グローバルまたは設定から client_secrets_data を取得
-    client_secrets_data = get_credentials_data()
+    client_secrets_data = get_credentials_data(credentials_path)
     flow = Flow.from_client_config(
         client_secrets_data, scopes=SCOPES, redirect_uri=url_for("oauth2callback_route", _external=True)
     )
@@ -93,15 +93,18 @@ def authorize():
     return redirect(authorization_url)
 
 
-def get_credentials_data():
+def get_credentials_data(credentials_path: str | None):
     """クライアントシークレットデータを取得します。"""
     # 環境変数またはファイルから取得
+    if credentials_path:
+        with open(credentials_path, "r") as f:
+            return json.load(f)
+
     credentials_json = os.environ.get("CREDENTIALS_JSON")
     if credentials_json:
         return json.loads(credentials_json)
-    else:
-        with open("credentials.json", "r") as f:
-            return json.load(f)
+
+    raise ValueError("CREDENTIALS_JSON 環境変数が設定されていません。")
 
 
 def credentials_to_dict(credentials):
