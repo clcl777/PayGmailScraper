@@ -19,7 +19,7 @@ def gmail_setup(credentials_path: str | None, auth_type: str, token_path: str):
             raise ValueError("デスクトップアプリの場合、credentials.jsonのパスを指定してください。")
         return gmail_setup_desktop(credentials_path, token_path)
     elif auth_type == "web":
-        return gmail_setup_web(credentials_path)
+        return gmail_setup_web()
     else:
         raise ValueError("auth_typeは 'desktop' または 'web' を指定してください。")
 
@@ -50,7 +50,7 @@ def gmail_setup_desktop(client_secrets_path: str, token_path: str):
         raise
 
 
-def gmail_setup_web(credentials_path: str):
+def gmail_setup_web():
     """Webアプリ用のGmail APIセットアップ。"""
     global flow
     global credentials
@@ -80,13 +80,19 @@ def gmail_setup_web(credentials_path: str):
         raise
 
 
-def authorize(credentials_path: str | None = None):
+def authorize(credentials_path: str | None = None, https: bool = True):
     """ユーザーをGoogleのOAuth 2.0認証ページにリダイレクトします。"""
     global flow
     # グローバルまたは設定から client_secrets_data を取得
     client_secrets_data = get_credentials_data(credentials_path)
+    if https:
+        redirect_uri = url_for("oauth2callback_route", _external=True, _scheme="https")
+    else:
+        redirect_uri = url_for("oauth2callback_route", _external=True)
     flow = Flow.from_client_config(
-        client_secrets_data, scopes=SCOPES, redirect_uri=url_for("oauth2callback_route", _external=True)
+        client_secrets_data,
+        scopes=SCOPES,
+        redirect_uri=redirect_uri,
     )
     authorization_url, state = flow.authorization_url(access_type="offline", include_granted_scopes="true")
     session["state"] = state

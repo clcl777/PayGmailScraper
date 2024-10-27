@@ -7,8 +7,10 @@ from PayGmailScraper import PayGmailScraper, authorize, oauth2callback
 app = Flask(__name__)
 app.secret_key = "your-secret-key"
 
-# 開発環境で HTTPS を使用しない場合の設定
-os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+# HTTPS を使用しない場合の設定
+HTTPS = False
+if not HTTPS:
+    os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 # credentials_web.jsonのパスを指定　指定しない場合は環境変数から取得
 CREDENTIALS_PATH = "credentials_web.json"
@@ -31,7 +33,7 @@ def index():
 
 @app.route("/authorize")
 def authorize_route():
-    return authorize(CREDENTIALS_PATH)
+    return authorize(CREDENTIALS_PATH, HTTPS)
 
 
 @app.route("/oauth2callback")
