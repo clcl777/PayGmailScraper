@@ -1,14 +1,14 @@
 # PayGmailScraper
 
 ## 概要
-PayGmailScraperは、PayGmailのメールをスクレイピングして、支払い情報を取得するためのデスクトップアプリケーションです。  
+PayGmailScraperは、Gmailのメールをスクレイピングして、支払い情報を取得するためのPythonライブラリです。  
 現在、以下の支払い方法に対応しています。
 - ANA Pay
 - 楽天ペイ
 
 ## インストール
 ```
-pip install -r pay-gmail-scraper
+pip install PyGmailScraper
 ```
 
 ## 使い方
