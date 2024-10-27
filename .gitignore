@@ -5,6 +5,8 @@ dist/
 *.egg-info/
 .pypirc
 credentials.json
+credentials_web.json
+credentials_desktop.json
 token.json
 venv/
 build/
