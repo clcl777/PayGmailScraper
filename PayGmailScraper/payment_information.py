@@ -14,3 +14,12 @@ class PaymentInformation:
 
     def values(self) -> tuple[datetime | None, datetime | None, int | None, str | None]:
         return self.email_date, self.payment_date, self.price, self.store
+
+    def to_dict(self) -> dict:
+        return {
+            "email_date": self.email_date.isoformat() if self.email_date else None,
+            "payment_date": self.payment_date.isoformat() if self.payment_date else None,
+            "price": self.price,
+            "store": self.store,
+            "payment_method": self.payment_method,
+        }

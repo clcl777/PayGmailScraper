@@ -1,6 +1,6 @@
 [project]
 name = "PyGmailScraper"
-version = "1.0.0"
+version = "1.1.0"
 description = "Retrieve payment information, including QR code payments and credit card, from Gmail."
 readme = "README.md"
 license = {file = "LICENSE.txt"}
